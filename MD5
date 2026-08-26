@@ -1,4 +1,4 @@
-c96a17019ab80d7223da9c12f65e0e5c *DESCRIPTION
+7b2257c73664480b04892a7824d97110 *DESCRIPTION
 003d3a243c42d1cbfc15e3c3a06d0d58 *NAMESPACE
 952f70cc99eca7aa5d2c454d9f7319bb *R/animal.points.R
 4a62623b6af4edd69fa56a668f21eb0b *R/c_stream_dist.R
@@ -7,7 +7,7 @@ ad28cf377005857db0428b66aa126a06 *R/calc.stream.dist.R
 b0f6e519bc402f08451707a6df2d82ea *R/dist.over.time.R
 5b290533f051d6353f3b0148cfde57cf *R/dist.per.segment.R
 f6e55a28ca8fcdc2d94230b38b14fb72 *R/increase.stream.points.R
-d541d1c37d8fca46867883b09f956295 *R/movements.R
+afb18f1a0ac0c49ab8242df47ea0aabc *R/movements.R
 e22602ac2084bbbe0b73ddbd516f2df8 *R/node.dist.R
 9116b3d69efcf0be591517bb8e060baa *R/nodes.R
 aedbc4970ddad495629c9d67939b7b8d *R/prep.data.R
@@ -21,7 +21,7 @@ b48aef745e50e084b214549f10de8e84 *data/animal.points.rda
 dfd5293f18acd7f86e4b142ec611c11b *data/stream.line.rda
 9dba2eeec2cc42a0155a383447b3f65b *inst/doc/SNMA_vignette.R
 45f222954fb39179db2f8148715cf2b2 *inst/doc/SNMA_vignette.Rmd
-674124cdc1ddf5cc9d165167c02ac902 *inst/doc/SNMA_vignette.pdf
+8ea3bb56b7cf5fc99eaede03ff4c6202 *inst/doc/SNMA_vignette.pdf
 d7022b366fd5110101a202b0d832e3d9 *man/animal.points.Rd
 8c0322d24bb35dbc621d177186d6a934 *man/calc.stream.dist.Rd
 fd68ea475d00cdc241038f347a0fc9b2 *man/dist.over.time.Rd

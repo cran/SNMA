@@ -319,7 +319,10 @@ movements <- function(data=NULL,space.use=TRUE,from.previous=TRUE,cumulative=TRU
 
 
   #make list so I can detect the nulls
-  if(is.null(keep)==FALSE){keep <- keep[,-which(colnames(keep)=="id")]}
+  if(is.null(keep)==FALSE){
+    keep.names <- colnames(keep)[which(colnames(keep)!="id")] #extract column names
+    keep <- as.data.frame(keep[,-which(colnames(keep)=="id")])
+    colnames(keep) <- keep.names}
 
   temp <- list(keep = keep,space.use = space.use.a,dist.from.prev=from.prev.a,cumulative.dist =  cumm.dist.a, dist.from.downstream=from.downstream.a,direction=direction.a,time.diff=time.diffs.a )
 

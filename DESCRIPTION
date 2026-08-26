@@ -1,14 +1,14 @@
 Package: SNMA
 Type: Package
 Title: Stream Network Movement Analyses
-Version: 0.1.5
+Version: 0.1.7
 Authors@R: person(
     given = c("Donald", "T."),
     family = "McKnight",
     role = c("aut", "cre"),
     email = "donald.mcknight@my.jcu.edu.au",
     comment = c(affiliation = "Savanna Field Station"))
-Date: 2026-01-24
+Date: 2026-08-26
 Maintainer: Donald T. McKnight <donald.mcknight@my.jcu.edu.au>
 Description: Calculating home ranges and movements of animals in complex stream environments
     is often challenging, and standard home range estimators do not apply. This
@@ -27,7 +27,7 @@ Suggests: ggplot2, ggnewscale, knitr,rmarkdown
 Depends: R (>= 3.5)
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2026-02-02 00:55:55 UTC; Donald McKnight
+Packaged: 2026-08-26 20:06:33 UTC; Donald McKnight
 Author: Donald T. McKnight [aut, cre] (affiliation: Savanna Field Station)
 Repository: CRAN
-Date/Publication: 2026-02-04 18:10:13 UTC
+Date/Publication: 2026-08-26 20:30:02 UTC
