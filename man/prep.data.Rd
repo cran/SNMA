@@ -51,6 +51,10 @@ This is the only function needed to prepare data for analyses such as \code{\lin
 
 \strong{Note:} All data MUST be in the same projected system. These functions are intended for data formatted in decimal degrees.
 
+\strong{Note:} \code{l} must be class 'sf' and 'data.frame' with 2 variables. The first must be a vector of segment ids, and the second must be a geometry object with X and Y (in that order). This should be the default from generating polylines in programs like QGIS or ArcGIS. Check with \code{str()} and compare against \code{str(stream.line)} (the center line object that comes with SNMA)
+
+\strong{Caution:} Be careful with the construction of your \code{l} object. Within each segment, points must be consecutive going upstream or downstream. If you create a segment by merging two existing segments, points will be out of order if one segment was created going upstream while the other was created going downstream. As a quick check, \code{prep.data()} will measure the straight line distance between consecutive points for each segment in \code{l} and return the median and maximum distances. Check these values closely. Either a large disparity between them or a larger max than you would expect likely indicates an issue. See vignette for more details.
+
 \strong{Do not use braided streams}. If a stream is braided (i.e., channels split then reconnect forming islands) the calculations will be incorrect. If you are working in a braided system, but all of your known movements do not include the braids, simply use a shapefile that does not include the braids (e.g., a study that only tracks in the main channel and largest side channels, without tracking in braided channels)
 }
 \examples{

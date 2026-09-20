@@ -1,7 +1,8 @@
 ## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  dev = "png"
 )
 
 if (!requireNamespace("ggplot2", quietly = TRUE)) {
@@ -11,6 +12,9 @@ if (!requireNamespace("ggplot2", quietly = TRUE)) {
 if (!requireNamespace("ggnewscale", quietly = TRUE)) {
   knitr::knit_exit()
 }
+
+
+
 
 ## -----------------------------------------------------------------------------
 library(ggplot2)
@@ -24,6 +28,20 @@ ggplot()+
   labs(color="Stream\nsegments")+
   new_scale_color() +
   geom_point(data=nodes,aes(y=lat,x=lon),size=2) #include the nodes
+
+## -----------------------------------------------------------------------------
+str(stream.line)
+
+## -----------------------------------------------------------------------------
+check.segments <- as.data.frame(sf::st_coordinates(stream.line)) #extract coordinates and segment IDs
+check.segments$order <- 1:nrow(check.segments) #add column of order information
+#(in this case continuous across all segments, 
+#but could be modified to restart at each segment for better visualization)
+
+#make a plot
+ggplot(check.segments,aes(x=X,y=Y,color=order))+
+  geom_point()
+
 
 ## -----------------------------------------------------------------------------
 nodes

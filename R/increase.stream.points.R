@@ -21,18 +21,23 @@ increase.stream.points <- function(l,freq=1){
     #check for and remove missing data
     if(nrow(coords)==0){warning(paste("LINESTRING EMPTY for segment",id.a,"removing that segment because there are no coordinates in it"))}else{
 
+      straight.distances <- geosphere::distHaversine(coords[-nrow(coords),],coords[-1,])
+      message("l segment ",id.a," input straight distance between points: median = ",round(stats::median(straight.distances),1)," (m), max = ",round(max(straight.distances),1)," (m)")
+
       new.line <- vector("list", nrow(coords))
       new.line[[1]] <- coords[1,]
 
       for(i in 2:nrow(coords)){ #make new points between each vertex
         bearing.i <- geosphere::bearing(coords[(i-1),],coords[i,])# bearing between points
         dist.i <- geosphere::distm(coords[(i-1),],coords[i,]) #distance between points
-        new.line[[i]] <- if(dist.i > freq){  #sequence of distances to space new points
+        new.line[[i]]<- if(dist.i > freq){  #sequence of distances to space new points
         rbind(geosphere::destPoint(coords[(i-1),],bearing.i,seq(freq,dist.i,freq)),coords[i,])}else{coords[i,]}} #if the distance between the two sets of corrdinates is smaller than the distances being added, it just keeps the originals
+
       new.line <- do.call("rbind.data.frame",new.line) #combine results
+      colnames(new.line) <- c("lon","lat")
       new.line$id <- id.a
       res[[a]] <- new.line}
-  }#end else{}
+  }
 
   res <- do.call("rbind.data.frame",res)
   res <- res[duplicated(res)==F,] #removes duplicates

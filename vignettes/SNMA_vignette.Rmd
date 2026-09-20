@@ -14,7 +14,8 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  dev = "png"
 )
 
 if (!requireNamespace("ggplot2", quietly = TRUE)) {
@@ -24,6 +25,9 @@ if (!requireNamespace("ggplot2", quietly = TRUE)) {
 if (!requireNamespace("ggnewscale", quietly = TRUE)) {
   knitr::knit_exit()
 }
+
+
+
 ```
 
 # Introduction and overview
@@ -79,6 +83,32 @@ Note that larger stream networks will take longer to run, and you should trim yo
 Stream networks cannot include braids (i.e., sections where the streams fork and reconnect later, forming islands). If your system is braided, you can still analyze it if your tracking efforts were focused on main channels such that you can strategically remove braids from the network and leave a minimum path behind that contains no braids. Alternatively, you may be able to assess movements in small chunks, using subsets of the data that do not include braids.
 
 I recommend creating shapefiles in a program like ArcGIS or QGIS. You can either trace a stream specifying segments as you go, or download an existing shapefile and split it into appropriate segments. Load it into R using the *st_read()* function in the **sf** package.
+
+It is very important that the shapefile is formatted correctly. I recommend checking it with the *str()* function. This should show that it is class 'sf' and 'data.frame' with 2 variables. The first must be a vector of segment ids, and the second must be a geometry object with X and Y (in that order). Look at the *stream.line* object as a point of comparison.
+
+```{r}
+str(stream.line)
+```
+
+**Caution:** Be very careful with the construction of your line segments. The points within segments must be consecutive going either upstream or downstream. If you create a segment by merging two existing segments, this requirement may be violated. If, for example, one segment was created going downstream and the other was created going upstream and you merge them into a single segment, then the points will be inverted for part of that new segment. This will give spurious results or make the functions fail. As a quick and dirty check, the *prep.data()* function calculates the straight line distances between each consecutive pair of points within each segment and prints the median and maximum per segment: "l segment ____ straight distance between points: median = ____ (m), max = ___ (m)" If there is either a large mismatch between the median and max or the max is much larger than you would expect, that suggests that the segment was not constructed consecutively and you may need to modify or re-make that segment.
+
+A more comprehensive visual check can be performed by using *st_coordinates()* to extract the coordinates for each segment, then adding a column of order information and plotting with *ggplot()*. This should show a continuous color gradient within each segment. It does not matter if some segments are ordered downstream while others are ordered upstream so long as the order is consistent within each segment.
+
+The code below illustrates this procedure with the inbuilt data set. Visualizations will be more meaningful with full data sets.
+
+```{r}
+check.segments <- as.data.frame(sf::st_coordinates(stream.line)) #extract coordinates and segment IDs
+check.segments$order <- 1:nrow(check.segments) #add column of order information
+#(in this case continuous across all segments, 
+#but could be modified to restart at each segment for better visualization)
+
+#make a plot
+ggplot(check.segments,aes(x=X,y=Y,color=order))+
+  geom_point()
+
+```
+
+You should also check the output of *prep.data()*, for example, making sure that in *$dps.segments* node1 and node2 are never identical within a row. Likewise, check that *$node.distances* are never 0 or NULL.
 
 Note that you must have an ID for each segment, even if your "network" is a single linear stream channel (one segment). Segment IDs should be integers.
 
